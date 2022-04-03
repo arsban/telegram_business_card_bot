@@ -6,6 +6,7 @@ from telegram import ReplyKeyboardMarkup
 from dotenv import load_dotenv
 import logging
 from logging.handlers import RotatingFileHandler
+from COMAND_ANSWERS import ANSWERS
 
 load_dotenv()
 
@@ -37,20 +38,6 @@ updater = Updater(token=TELEGRAM_TOKEN)
 dp = updater.dispatcher
 
 
-COMAND_ANSWERS = {
-    'start': (
-        'Привет {}!'
-        '\nЯ Python-разработчик и это мой Бот-визитка'
-        '\nС моими работами можно ознакомиться нажав на кнопку "GitHub"'
-        '\nМое резюме на hh.ru можно посмотреть нажав на кнопку "Resume"'
-        '\nБолее подроную информацию про меня можно узнать на кнопку "Об Авторе"'
-        ),
-    'GitHub': 'https://github.com/arsban',
-    'Resume': 'https://hh.ru/resume/272859cdff09730b0d0039ed1f354577334678',
-    'Об Авторе': 'надо заполнить',
-}
-
-
 def send_message(message):
     bot.send_message(chat_id=CHAT_ID, text=message)
 
@@ -59,11 +46,11 @@ def text_message_controler(update, context):
     chat = update.effective_chat
     text_mesage = update.message.text
     if text_mesage == 'GitHub':
-        context.bot.send_message(chat_id=chat.id, text=COMAND_ANSWERS['GitHub'])
+        context.bot.send_message(chat_id=chat.id, text=ANSWERS['GitHub'])
     elif text_mesage == 'Resume':
-        context.bot.send_message(chat_id=chat.id, text=COMAND_ANSWERS['Resume'])
+        context.bot.send_message(chat_id=chat.id, text=ANSWERS['Resume'])
     elif text_mesage == 'Об Авторе':
-        context.bot.send_message(chat_id=chat.id, text=COMAND_ANSWERS['Об Авторе'])
+        context.bot.send_message(chat_id=chat.id, text=ANSWERS['Об Авторе'])
     else:
         context.bot.send_message(chat_id=chat.id, text=f'Я не понимаю: {text_mesage} - не запрограмирован еще:(')
 
@@ -75,7 +62,7 @@ def wake_up(update, context):
         ['GitHub', 'Resume'],
         ['Об Авторе'],
     ])
-    context.bot.send_message(chat_id=chat.id, text=COMAND_ANSWERS['start'].format(name), reply_markup=button)
+    context.bot.send_message(chat_id=chat.id, text=ANSWERS['start'].format(name), reply_markup=button)
 
 
 ################
